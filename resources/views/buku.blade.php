@@ -3,6 +3,7 @@
 @section('title', 'Data Buku')
 
 @section('content')
+<a href="{{route('buku.create')}}" class="btn btn-primary float-end">Tambah Buku</a>
 <table class="table table-stripped">
     <thead>
         <tr>
@@ -22,6 +23,14 @@
                 <td>{{ $buku->penulis }}</td>
                 <td>{{ "Rp. ".number_format($buku->harga, 2,',', '.') }}</td>
                 <td>{{ \Carbon\Carbon::parse($buku->tgl_terbit)->format('d-m-Y') }}</td>
+                <td>
+                    <form action="{{route('buku.destroy', $buku->id)}}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button onclick="return confirm('Yakin mau dihapus?')" type="submit" class="btn btn-danger">Hapus</button>
+                    </form>
+                    <a href="{{route('buku.edit', $buku->id)}}" class="btn btn-primary">Edit</a>
+                </td>
             </tr>
         @endforeach
     </tbody>
